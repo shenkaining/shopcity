@@ -23,6 +23,7 @@ requests.interceptors.request.use((config) => {
 requests.interceptors.response.use((res) => {
   // 在响应拦截器中结束进度条
   nprogress.done()
+  // console.log(res)
   // 响应成功的回调
   return res.data
 }, (error) => {

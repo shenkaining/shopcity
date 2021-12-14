@@ -1,6 +1,6 @@
 <template>
-  <div>搜索页
-    <h1>{{$route.params.keyword}}</h1>
+  <div>
+    <typeNav></typeNav>
   </div>
 </template>
 

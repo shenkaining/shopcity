@@ -31,10 +31,10 @@ const routes = [
     meta: { showFooter: false }
   },
   {
-    path: '/search/:keyword?',
+    path: '/search',
     name: 'search',
     component: Search,
-    meta: { showFooter: true }
+    meta: { showFooter: true, showNav: false }
   }
 ]
 // 将在原型上的 push 方法先备份一下
