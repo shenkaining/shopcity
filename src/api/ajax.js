@@ -28,6 +28,6 @@ requests.interceptors.response.use((res) => {
   return res.data
 }, (error) => {
   // 响应失败的回调，使用reject结束回调并抛出错误
-  return Promise.reject(new Error('fail'))
+  return Promise.reject(error)
 })
 export default requests

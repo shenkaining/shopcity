@@ -48,12 +48,14 @@ export default {
   },
   methods: {
     goSearch () {
+      const loction = { name: 'search' }
       // 编程式导航
       // 以对像形式传参
-      this.$router.push({
-        name: 'search', // 传递params参数，必须使用路由的 name
-        params: { keyword: this.keyword || undefined }
-      })
+      loction.params = { keyword: this.keyword || undefined }
+      if (this.$route.query) {
+        loction.query = this.$route.query
+        this.$router.push(loction)
+      }
     }
   }
 }

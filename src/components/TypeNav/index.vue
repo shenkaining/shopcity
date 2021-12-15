@@ -62,9 +62,6 @@ export default {
     }
   },
   mounted () {
-    //   钩子函数中调用vuex中actions中方法发送请求
-    // 开启命名空间的模块，必须使用  模块名/方法名
-    this.$store.dispatch('categoryList/getList')
     // 根据路由路径判断是否展开列表
     if (this.$route.path !== '/home') {
       this.showNav = false
@@ -91,6 +88,7 @@ export default {
       //   console.log(e.target)
       // 元素上的自定义属性存储在 dataset中
       const { categoryname, category1id, category2id, category3id } = e.target.dataset
+      const location = { name: 'search' }
       const query = { categoryName: categoryname }
       if (categoryname) {
         if (category1id) {
@@ -100,10 +98,12 @@ export default {
         } else {
           query.category3Id = category3id
         }
-        this.$router.push({
-          name: 'search',
-          query
-        })
+        if (this.$route.params) {
+          // 当params为空对象是也是true，所以也会执行
+          location.params = this.$route.params
+          location.query = query
+          this.$router.push(location)
+        }
       }
     },
     enterShow () {
