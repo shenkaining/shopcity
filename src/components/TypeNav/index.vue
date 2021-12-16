@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('categoryList', ['categoryList'])
+    ...mapState('home', ['categoryList'])
   },
   methods: {
     //   借助 lodash中的 节流函数

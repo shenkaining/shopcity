@@ -1,6 +1,6 @@
 // 引入请求数据的api
 import { reqCategoryList, reqBannerList, reqFloorList } from '@/api'
-export const categoryList = {
+export const home = {
   namespaced: true,
   state: {
     categoryList: [],
@@ -18,12 +18,16 @@ export const categoryList = {
     async getBannerList ({ commit }) {
       const bannerList = await reqBannerList()
       // console.log(bannerList)
-      commit('GETBANNERLIST', bannerList.data)
+      if (bannerList.code === 200) {
+        commit('GETBANNERLIST', bannerList.data)
+      }
     },
     async getFloorList ({ commit }) {
       const floorList = await reqFloorList()
       // console.log(floorList)
-      commit('GETFLOORLIST', floorList.data)
+      if (floorList.code === 200) {
+        commit('GETFLOORLIST', floorList.data)
+      }
     }
   },
   mutations: {

@@ -14,7 +14,7 @@ export default {
   mounted () {
     //   钩子函数中调用vuex中actions中方法发送请求
     // 开启命名空间的模块，必须使用  模块名/方法名
-    this.$store.dispatch('categoryList/getList')
+    this.$store.dispatch('home/getList')
   }
 }
 </script>

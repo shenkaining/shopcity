@@ -3,19 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="carousel in bannerList" :key="carousel.id">
-              <img :src="carousel.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <Carousel :list="bannerList"></Carousel>
       </div>
       <div class="right">
         <div class="news">
@@ -91,50 +79,48 @@
 </template>
 
 <script>
-import Swiper from 'swiper'
 import { mapState } from 'vuex'
 export default {
   mounted () {
-    this.$store.dispatch('categoryList/getBannerList')
-    this.$store.dispatch('categoryList/getFloorList')
+    this.$store.dispatch('home/getBannerList')
     // 创建swiper实例不能写在mounted钩子中
     // 创建Swiper实例前必须先存在页面结构，
     // 但因为结构是通过ajax异步请求回的数据渲染的，所以会造成创建实例时还没有页面结构，使轮播效果无法生效
   },
   computed: {
-    ...mapState('categoryList', ['bannerList'])
-  },
-  watch: {
-    // 使用监听器监听 bannerList的数据变化
-    bannerList: {
-      handler () {
-        // 再配合 $nextTick 确保数据更新后新的结果生成了
-        this.$nextTick(() => {
-          var mySwiper = new Swiper('.swiper-container', {
-            loop: true, // 循环模式选项
-            // 开启自动播放
-            autoplay: {
-              pauseOnMouseEnter: true, // 鼠标悬停暂停自动播放
-              delay: 2000,
-              stopOnLastSlide: false,
-              disableOnInteraction: false // 进行交互后 会停止自动播放
-            },
-            // 如果需要分页器
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true
-            },
-            // 如果需要前进后退按钮
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev'
-            }
-          })
-        })
-      }
-
-    }
+    ...mapState('home', ['bannerList'])
   }
+  // watch: {
+  //   // 使用监听器监听 bannerList的数据变化
+  //   bannerList: {
+  //     handler () {
+  //       // 再配合 $nextTick 确保数据更新后新的结果生成了
+  //       this.$nextTick(() => {
+  //         var mySwiper = new Swiper('.swiper-container', {
+  //           loop: true, // 循环模式选项
+  //           // 开启自动播放
+  //           autoplay: {
+  //             pauseOnMouseEnter: true, // 鼠标悬停暂停自动播放
+  //             delay: 2000,
+  //             stopOnLastSlide: false,
+  //             disableOnInteraction: false // 进行交互后 会停止自动播放
+  //           },
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: '.swiper-pagination',
+  //             clickable: true
+  //           },
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: '.swiper-button-next',
+  //             prevEl: '.swiper-button-prev'
+  //           }
+  //         })
+  //       })
+  //     }
+
+  //   }
+  // }
 }
 </script>
 
