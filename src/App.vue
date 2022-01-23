@@ -11,6 +11,11 @@ import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 export default {
   components: { Header, Footer },
+  data () {
+    return {
+      msg: 'abc'
+    }
+  },
   mounted () {
     //   钩子函数中调用vuex中actions中方法发送请求
     // 开启命名空间的模块，必须使用  模块名/方法名

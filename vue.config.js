@@ -1,4 +1,7 @@
 module.exports = {
+  // 生产模式打包 不生成map文件
+  productionSourceMap: false,
+  // 关闭eslint校验
   lintOnSave: false,
   // 代理服务器，解决跨域请求
   devServer: {

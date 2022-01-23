@@ -30,6 +30,9 @@ export const search = {
     },
     trademarkList (state) {
       return state.searchInfo.trademarkList || []
+    },
+    total (state) {
+      return state.searchInfo.total
     }
   }
 }

@@ -5,15 +5,19 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您</p>
-          <p>
+          <p v-if="!userName">
             <span>请</span>
             <router-link to="/login">登录</router-link>
-            <router-link to="/regist" class="register">免费注册</router-link>
+            <router-link to="/register" class="register">免费注册</router-link>
+          </p>
+          <p v-else>
+            <a>{{userName}}</a>
+            <a @click="logout">&nbsp;|&nbsp; 退出登录</a>
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
-          <a href="###">我的购物车</a>
+          <router-link to="/center">我的订单</router-link>
+          <router-link to="/shopCart">我的购物车</router-link>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
@@ -39,6 +43,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Header',
   data () {
@@ -46,15 +51,42 @@ export default {
       keyword: ''
     }
   },
+  mounted () {
+    // 全局事件总线，接收兄弟组件的信息
+    // 兄弟组件的$emit一触发，$on中的回调就会触发
+    this.$bus.$on('clearKeyword', () => {
+      this.keyword = ''
+    })
+  },
+  beforeDestroy () {
+    // 组件销毁前解绑全局事件总线
+    this.$bus.$off('clearKeyword')
+  },
+  computed: {
+    ...mapGetters('user', ['userName'])
+  },
   methods: {
+    // 搜索框 搜索商品
     goSearch () {
       const loction = { name: 'search' }
       // 编程式导航
-      // 以对像形式传参
+      // 以对像形式传参，路径中有占位符，如果参数为 空字符串，会导致路径缺失，可以传 undefined
       loction.params = { keyword: this.keyword || undefined }
       if (this.$route.query) {
         loction.query = this.$route.query
+        // 解决编程式导航连续点击会报错的问题，也可以直接在router.js中修改push/replace方法
+        // this.$router.push(loction, () => {}, () => {})
         this.$router.push(loction)
+      }
+    },
+    // 退出登录
+    async logout () {
+      try {
+        await this.$store.dispatch('user/userLogout')
+        // 退出后返回home首页
+        this.$router.push('/home')
+      } catch (error) {
+        alert(error.message)
       }
     }
   }
